@@ -1,0 +1,45 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.BUILD-SNAPSHOT'
+	}
+	repositories {
+		mavenCentral()
+		maven { url 'https://repo.spring.io/snapshot' }
+		maven { url 'https://repo.spring.io/milestone' }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.doc.scp.demo'
+version = '0.0.1'
+sourceCompatibility = 1.8
+
+ext {
+	springCloudVersion = 'Edgware.RC1'
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/snapshot' }
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter',
+			'io.zipkin.java:zipkin-server',
+			'io.zipkin.java:zipkin-autoconfigure-ui'
+	runtime 'org.springframework.boot:spring-boot-devtools'
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
